@@ -11,7 +11,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     case 'GET':
       try {
         if (id) {
-          // Fetch a specific cusine by id
           const cusine = await prisma.cusine.findUnique({
             where: { id: Number(id) },
           });
@@ -21,7 +20,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             res.status(404).json({ error: 'cusine not found' });
           }
         } else {
-          // Fetch all cusines
           const cusines = await prisma.cusine.findMany();
           res.status(200).json(cusines);
         }
