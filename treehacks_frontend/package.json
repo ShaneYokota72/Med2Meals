@@ -11,17 +11,11 @@
   "dependencies": {
     "@prisma/client": "^5.9.1",
     "@tryterra/terra-ui": "^0.2.0",
-    "bun": "^1.0.27",
-    "dotenv": "^16.4.4",
-    "next": "14.1.0",
     "bcryptjs": "^2.4.3",
     "prisma": "^5.9.1",
-    "@prisma/client": "^5.9.1",
-    "@tryterra/terra-ui": "^0.2.0",
     "bun": "^1.0.27",
     "dotenv": "^16.4.4",
     "next": "14.1.0",
-    "prisma": "^5.9.1",
     "react": "^18",
     "react-dom": "^18",
     "terra-api": "^1.4.5"
