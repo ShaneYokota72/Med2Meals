@@ -42,6 +42,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       res.status(500).json({ error: 'Error retrieving tests' });
     }
     break;
+   
     case 'PUT':
     try {
       const { id } = req.query;
