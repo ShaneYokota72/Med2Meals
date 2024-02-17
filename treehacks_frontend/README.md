@@ -35,3 +35,13 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 # Treehacks
+
+
+bun install prisma --save-dev
+bun prisma init
+
+## makemigrations and migrate
+bun prisma migrate dev --name migration_1
+
+## apply migration without makemigrations
+bun prisma migrate deploy
