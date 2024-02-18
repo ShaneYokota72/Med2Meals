@@ -176,17 +176,17 @@ async def query_handler(ctx: Context, sender: str, _query: RequestSchema):
         # medicine = _query.message
         medicine = 'Ibuprofen'
 
-        # recipes = await get_recipes(medicine)
-        # print("================================")
-        # print(recipes)
-        # print("================================")
-        # recipe_names = get_names(recipes)
-        # print(recipe_names)
-        # print("================================")
+        recipes = await get_recipes(medicine)
+        print("================================")
+        print(recipes)
+        print("================================")
+        recipe_names = get_names(recipes)
+        print(recipe_names)
+        print("================================")
 
         # recipe_names = ['Mint and Ginger Headache Tea', 'Quinoa Salad with Avocado and Beets', 'Almond Butter Banana Smoothie', 'Turkey and Vegetable Stir-Fry', 'Lemon and Ginger Chicken']
-        recipe_names = ['Mint and Ginger Headache Tea']
-        recipes = {'key': 'value'}
+        # recipe_names = ['Mint and Ginger Headache Tea']
+        # recipes = {'key': 'value'}
         if len(recipe_names) > 0:
             ctx.logger.info(f"Recipes acquired. Moving forward to image generation")
             resp = await query(
