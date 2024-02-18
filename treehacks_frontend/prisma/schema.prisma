@@ -64,6 +64,9 @@ model Order {
   isDelivered   Boolean   @default(false)
   compensation  Int       @default(0)
   reciepe       String?
+  imageLink     String?
+  description   String?
+  ingredients   String?
   user          User      @relation("UserAsCustomer", fields: [userId], references: [id])
   server        User?     @relation("UserAsServer", fields: [serverId], references: [id])
   createdAt     DateTime  @default(now())
