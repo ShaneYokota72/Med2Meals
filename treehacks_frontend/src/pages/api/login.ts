@@ -13,6 +13,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     const user = await prisma.user.findUnique({
       where: { username },
+      include: {
+        userRoles: {
+          include: {
+            role: true, // Include details of the role from the Role model
+          },
+        },
+      },
     });
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
@@ -22,7 +29,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(401).json({ error: 'Invalid password' });
     }
     const { password: _, ...userWithoutPassword } = user;
-    res.status(200).json(userWithoutPassword);
+
+
+    // Assuming a user has only one role, extract the roleId directly
+    const roleId = user.userRoles.length > 0 ? user.userRoles[0].roleId : null;
+
+    // Prepare the response, now including only the roleId
+    const response = {
+      ...userWithoutPassword,
+      roleId, // Include only the roleId
+    };
+
+
+
+    res.status(200).json(response);
   } catch (error) {
     console.error('Login error:', error);
     res.status(500).json({ error: 'Error during user login' });

@@ -11,12 +11,12 @@ export default function page() {
     async function login(){
         const response = await fetch('/api/login', {
             method: 'POST',
+            headers: {"Content-Type": "application/json"},
             body: JSON.stringify({username, password})
         })
         const data = await response.json()
 
         if(response.ok){
-            /* store userid in cookie */
             router.push(`/dashboard?userid=${data.id}`)
         } else {
             alert("login credential wrong")

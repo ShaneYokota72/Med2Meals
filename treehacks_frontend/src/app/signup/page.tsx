@@ -2,10 +2,38 @@
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 
+export enum Cuisines {
+  American = 4,
+  Chinese = 5,
+  French = 6,
+  Indian = 7,
+  Italian = 8,
+  Japanese = 9,
+  Korean = 10,
+  Mexican = 11,
+  Thai = 12,
+  Vietnamese = 13,
+}
+
+export enum DietaryRestrictions {
+  Vegan = 5,
+  Vegetarian = 6,
+  GlutenFree = 7,
+  None = 8,
+}
+
+export enum Goals {
+  ProteinGoal = 1,
+  CalorieGoal = 2,
+}
+
+
 
 interface signUpData {
     username: string;
     password: string;
+    age: number;
+    bio: string;
 
     american: boolean;
     chinese: boolean; 
@@ -54,9 +82,63 @@ export default function page() {
     }
 
     function saveAndContinue() {
-        // make api call to save all the thing in the database
-        // return userid from the api call
-        // setUserid(userid)
+        console.log(signUpData);
+        const requestData = {
+            username: signUpData.email,
+            password: signUpData.password,
+            age: parseInt(signUpData.age),
+            bio:  signUpData.bio,
+            diets: [],
+            cuisines: [],  
+            goals: [],  
+        };
+
+
+        if (signUpData.vegan) requestData.diets.push(DietaryRestrictions.Vegan);
+        if (signUpData.vegetarian) requestData.diets.push(DietaryRestrictions.Vegetarian);
+        if (signUpData.glutenFree) requestData.diets.push(DietaryRestrictions.GlutenFree);
+
+        if (signUpData.american) requestData.cuisines.push(Cuisines.American);
+        if (signUpData.chinese) requestData.cuisines.push(Cuisines.Chinese);
+        if (signUpData.french) requestData.cuisines.push(Cuisines.French);
+        if (signUpData.indian) requestData.cuisines.push(Cuisines.Indian);
+        if (signUpData.italian) requestData.cuisines.push(Cuisines.Italian);
+        if (signUpData.japanese) requestData.cuisines.push(Cuisines.Japanese);
+        if (signUpData.korean) requestData.cuisines.push(Cuisines.Korean);
+        if (signUpData.mexican) requestData.cuisines.push(Cuisines.Mexican);
+        if (signUpData.thai) requestData.cuisines.push(Cuisines.Thai);
+        if (signUpData.vietnamese) requestData.cuisines.push(Cuisines.Vietnamese);
+        
+        if (signUpData.proteinGoal) requestData.goals.push(Goals.ProteinGoal);
+        if (signUpData.calorieGoal) requestData.goals.push(Goals.CalorieGoal);
+        
+
+        // Make the API request
+        fetch('/api/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestData),
+        })
+        .then((response) => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Failed to register');
+            }
+        })
+            .then((data) => {
+            // do terra stuff here
+                
+                setUserid(data.id);
+                setStep("terra");
+        })
+        .catch((error) => {
+            console.error('Registration error:', error);
+        });
+
+        
 
         setStep("terra")
     }
@@ -106,9 +188,11 @@ export default function page() {
             case 'credential':
                 return(
                     <div className="flex flex-col gap-8 items-center">
-                        <input type="text" defaultValue={""} placeholder="Username" name='username' value={signUpData.username} onChange={handleInfoUpdate} className="bg-[#252937e0] px-8 py-4 text-white text-xl rounded-lg text-center" />
+                        <input type="text" defaultValue={""} placeholder="Email" name='email' value={signUpData.username} onChange={handleInfoUpdate} className="bg-[#252937e0] px-8 py-4 text-white text-xl rounded-lg text-center" />
                         <input type="password" defaultValue={""} placeholder="Password" name='password' value={signUpData.password} onChange={handleInfoUpdate} className="bg-[#252937e0] px-8 py-4 text-white text-xl rounded-lg text-center" />
-                        <button className="w-2/3 bg-[#252937] px-6 py-2 text-white text-xl rounded-lg text-center" onClick={() => {setStep("cuisine")}}>Sign up</button>
+                        <input type="text" defaultValue={""} placeholder="Age" name='age' value={signUpData.age} onChange={handleInfoUpdate} className="bg-[#252937e0] px-8 py-4 text-white text-xl rounded-lg text-center" />
+                        <input type="text" defaultValue={""} placeholder="Bio" name='bio' value={signUpData.bio} onChange={handleInfoUpdate} className="bg-[#252937e0] px-8 py-4 text-white text-xl rounded-lg text-center" />
+                        <button className="w-2/3 bg-[#252937] px-6 py-2 text-white text-xl rounded-lg text-center" onClick={() => { setStep("cuisine") }}>Sign up</button>
                     </div>
                 )
             case 'cuisine':

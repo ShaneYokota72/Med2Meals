@@ -2,6 +2,7 @@
 import { PrismaClient } from '@prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
 import bcrypt from 'bcryptjs';
+import { serialize } from 'cookie';
 
 const prisma = new PrismaClient();
 
@@ -12,53 +13,44 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { username, password, age, diets, cusines, goals } = body;
-
+  const { username, password, age, name, role } = body;
+  console.log("SERVER LOGS")
+  console.log(username, password, name, age);
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const newUser = await prisma.$transaction(async (prisma) => {
+    const { user: newUser, userRole } = await prisma.$transaction(async (prisma) => {
       const user = await prisma.user.create({
         data: {
           username,
           password: hashedPassword,
-          age,
+          name,
+          age
         },
       });
 
-      const userCusinesPromises = cusines.map((cusineId) =>
-        prisma.userCusine.create({
-          data: {
-            userId: user.id,
-            cusineId,
-          },
-        })
-      );
-
-      const userDietsPromises = diets.map((dietId) =>
-        prisma.userDiet.create({
-          data: {
-            userId: user.id,
-            dietId,
-          },
-        })
-      );
-
-      const userGoalsPromises = goals.map((goalId) =>
-        prisma.userGoal.create({
-          data: {
-            userId: user.id,
-            goalId,
-          },
-        })
-      );
-
-      await Promise.all([...userCusinesPromises, ...userDietsPromises, ...userGoalsPromises]);
-
-      return user;
+      const userRole = await prisma.userRole.create({
+        data: {
+          userId: user.id, // Use the ID of the newly created user
+          roleId: role, // Use the provided role ID
+        },
+      });
+      return {user, userRole};
     });
 
     const { password: _, ...userWithoutPassword } = newUser;
+    console.log("user details in cookie");
+    console.log(newUser)
+    const userDataForCookie = {
+      id: newUser.id, username: newUser.name, walletId: newUser.walletId, role: userRole.roleId
+    };
+    const serialized = serialize('userData', JSON.stringify(userDataForCookie), {
+      httpOnly: true,
+      secure: process.env.NODE_ENV !== 'development',
+      maxAge: 60 * 60 * 24 * 7,
+      path: '/',
+    });
+    res.setHeader('Set-Cookie', serialized);
     res.status(201).json(userWithoutPassword);
   } catch (error) {
     console.error('Registration error:', error);
