@@ -29,6 +29,32 @@ export enum Goals {
 }
 
 
+export enum Cuisines {
+  American = 4,
+  Chinese = 5,
+  French = 6,
+  Indian = 7,
+  Italian = 8,
+  Japanese = 9,
+  Korean = 10,
+  Mexican = 11,
+  Thai = 12,
+  Vietnamese = 13,
+}
+
+export enum DietaryRestrictions {
+  Vegan = 5,
+  Vegetarian = 6,
+  GlutenFree = 7,
+  None = 8,
+}
+
+export enum Goals {
+  ProteinGoal = 1,
+  CalorieGoal = 2,
+}
+
+
 
 interface signUpData {
     username: string;
