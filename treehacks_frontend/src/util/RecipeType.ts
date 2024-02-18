@@ -6,8 +6,8 @@ export type Recipe = {
     userId: number
     isDelivered: boolean
     compensation: number
-    ingredients: string
-    reciepe: string
+    ingredients: string[]
+    reciepe: string[]
     user: {
       name: string
     }
