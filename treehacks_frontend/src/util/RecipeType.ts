@@ -5,7 +5,7 @@ export type Recipe = {
     imageLink: string
     userId: number
     isDelivered: boolean
-    compenstation: number
+    compensation: number
     ingredients: string
     reciepe: string
     user: {

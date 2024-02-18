@@ -1,34 +1,42 @@
 "use client";
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { Recipe } from '@/util/RecipeType'
 import RecipeComponent from '@/components/RecipeComponent'
 
 export default function page() {
-    const [recipes, setRecipes] = useState<Recipe[]>([/* 
-        {
-          id: 1,
-          name: "Chicken Alfredo",
-          userId: 1,
-          isDelivered: false,
-          compenstation: 20,
-          reciepe: "Chicken Alfredo",
-          user: {
-            name: "chef1",
-          }
-        },
-        {
-          id: 1,
-          name: "Chicken Alfredo",
-          userId: 1,
-          isDelivered: false,
-          compenstation: 20,
-          reciepe: "Chicken Alfredo",
-          user: {
-            name: "chef1",
-          }
-        },
-       */])
+    const [recipes, setRecipes] = useState<Recipe[]>([
+      // {
+      //   id: 1,
+      //   name: "Chicken Alfredo",
+      //   userId: 1,
+      //   description: "creamy Chicken Alfredo",
+      //   imageLink: "https://www.budgetbytes.com/wp-content/uploads/2022/07/Chicken-Alfredo-bowl.jpg",
+      //   isDelivered: false,
+      //   compenstation: 20,
+      //   ingredients: "1 lb fettuccine\n1/2 cup unsalted butter\n1 cup heavy cream\n1 cup grated parmesan cheese\n1/2 tsp salt\n1/4 tsp black pepper\n2 cups cooked chicken",
+      //   reciepe: "1)Chicken Alfredo\n 2)dothis\n 3)dothis\n",
+      //   user: {
+      //     name: "chef1",
+      //   }
+      
+      // },
+      // {
+      //   id: 1,
+      //   name: "Chicken Alfredo",
+      //   userId: 1,
+      //   description: "creamy Chicken Alfredo",
+      //   imageLink: "https://www.budgetbytes.com/wp-content/uploads/2022/07/Chicken-Alfredo-bowl.jpg",
+      //   isDelivered: false,
+      //   compenstation: 20,
+      //   ingredients: "1 lb fettuccine\n1/2 cup unsalted butter\n1 cup heavy cream\n1 cup grated parmesan cheese\n1/2 tsp salt\n1/4 tsp black pepper\n2 cups cooked chicken",
+      //   reciepe: "1)Chicken Alfredo\n 2)dothis\n 3)dothis\n",
+      //   user: {
+      //     name: "chef1",
+      //   }
+      
+      // }
+      ])
 
     useEffect(() => {
         const fetchRecipes = async () => {
