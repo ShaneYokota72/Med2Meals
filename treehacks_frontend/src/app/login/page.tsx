@@ -10,21 +10,25 @@ export default function page() {
     const router = useRouter();
 
     async function login(){
-        console.log("username", username)
-        console.log("password", password)
 
-        // const response = await fetch('/api/login', {
-        //     method: 'POST',
-        //     body: JSON.stringify({username, password})
-        // })
-        // const data = await response.json()
+        const response = await fetch('/api/login', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({username, password})
+        })
+        const data = await response.json()
 
-        // if(response.ok){
-        //     /* store userid in cookie */
-        //     router.push(`/dashboard?userid=${data.id}`)
-        // } else {
-        //     alert("login credential wrong")
-        // }
+        if(response.ok){
+            /* store userid in cookie */
+            if (data.roleId == 3 ){
+                router.push(`/order?userid=${data.id}`)
+            } else {
+                router.push(`/dashboard?userid=${data.id}`)
+            }
+            
+        } else {
+            alert("login credential wrong")
+        }
     }
 
     return (

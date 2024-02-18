@@ -1,9 +1,14 @@
 export type Recipe = {
-    title: string;
-    description: string;
-    imageLink: string;
-    ingredients: string[];
-    instructions: string[];
-
-    index?: number;
-}
+    id: number
+    name: string
+    description: string
+    imageLink: string
+    userId: number
+    isDelivered: boolean
+    compenstation: number
+    ingredients: string
+    reciepe: string
+    user: {
+      name: string
+    }
+  }
