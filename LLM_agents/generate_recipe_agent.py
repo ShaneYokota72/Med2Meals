@@ -173,8 +173,8 @@ async def query_handler(ctx: Context, sender: str, _query: RequestSchema):
     ctx.logger.info("Query received")
     try:
         # do something here
-        # medicine = _query.message
-        medicine = 'Ibuprofen'
+        medicine = _query.message
+        # medicine = 'Ibuprofen'
 
         recipes = await get_recipes(medicine)
         print("================================")
