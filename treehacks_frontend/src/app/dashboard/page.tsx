@@ -1,28 +1,42 @@
 "use client";
 import Image from 'next/image';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Recipe } from '../../util/RecipeType';
 import RecipeComponent from '@/components/RecipeComponent';
 import clsx from 'clsx';
 
 export default function page() {
   const [recipes, setRecipes] = useState<Recipe[]>([
-    {
-      title: "Spaghetti",
-      description: "A classic Italian dish",
-      imageLink: "https://media.istockphoto.com/id/884287870/photo/grilled-chicken-alfredo.jpg?s=612x612&w=0&k=20&c=n0-f0Ex74UaL8dlTyYuw24H4MWZi3GysAbumvQzV4p4=",
-      // imageLink: "/Logo.png",
-      ingredients: ["spaghetti", "tomato sauce", "ground beef", "onion", "garlic"],
-      instructions: ["Boil water", "Cook spaghetti", "Cook beef and onion", "Combine"]
+    /* {
+      id: 1,
+      name: "Chicken Alfredo",
+      userId: 1,
+      description: "creamy Chicken Alfredo",
+      imageLink: "https://www.budgetbytes.com/wp-content/uploads/2022/07/Chicken-Alfredo-bowl.jpg",
+      isDelivered: false,
+      compensation: 20,
+      ingredients: "1 lb fettuccine\n1/2 cup unsalted butter\n1 cup heavy cream\n1 cup grated parmesan cheese\n1/2 tsp salt\n1/4 tsp black pepper\n2 cups cooked chicken",
+      reciepe: "1)Chicken Alfredo\n 2)dothis\n 3)dothis\n",
+      user: {
+        name: "chef1",
+      }
+    
     },
     {
-      title: "Chicken Alfredo",
-      description: "A creamy pasta dish",
-      imageLink: "https://plus.unsplash.com/premium_photo-1671547330493-b07d377085ca?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cGFzdGF8ZW58MHx8MHx8fDA%3D",
-      // imageLink: "/Logo.png",
-      ingredients: ["fettucine", "chicken", "butter", "heavy cream", "parmesan"],
-      instructions: ["Boil water", "Cook pasta", "Cook chicken", "Combine"]
-    }
+      id: 1,
+      name: "Chicken Alfredo",
+      userId: 1,
+      description: "creamy Chicken Alfredo",
+      imageLink: "https://www.budgetbytes.com/wp-content/uploads/2022/07/Chicken-Alfredo-bowl.jpg",
+      isDelivered: false,
+      compensation: 20,
+      ingredients: "1 lb fettuccine\n1/2 cup unsalted butter\n1 cup heavy cream\n1 cup grated parmesan cheese\n1/2 tsp salt\n1/4 tsp black pepper\n2 cups cooked chicken",
+      reciepe: "1)Chicken Alfredo\n 2)dothis\n 3)dothis\n",
+      user: {
+        name: "chef1",
+      }
+    
+    } */
   ])
 
   const [spin, setSpin] = useState(false)
@@ -35,6 +49,19 @@ export default function page() {
     setSpin(false)
   }
 
+  useEffect(() => {
+    // call llm endpoint
+    
+    // const fetchRecipes = async () => {
+    //   const response = await fetch('/api/dashboard', {
+    //     method: 'GET',
+    //     headers: {'Content-Type': 'application/json'},
+    //   })
+    //   const data = await response.json()
+    //   setRecipes(data)
+    // }
+    // fetchRecipes()
+  }, [])
 
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-r from-[#FFC371] to-[#FF5F6D] p-10 w-full">
