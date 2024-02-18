@@ -10,7 +10,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model Test {
   id        Int     @id @default(autoincrement())
   title     String
@@ -22,76 +21,53 @@ model Test {
 }
 
 model User {
-  id            Int          @id @default(autoincrement())
-  username      String       @unique
-  password      String
-  age           Int
-  userCuisines  UserCusine[]
-  userDiets     UserDiet[]
-  userGoals     UserGoal[]
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
+  id                Int          @id @default(autoincrement())
+  name              String?
+  username             String       @unique
+  password          String
+  age               Int
+  walletId          String?
+  ordersAsCustomer  Order[]      @relation("UserAsCustomer")
+  ordersAsServer    Order[]      @relation("UserAsServer")
+  userRoles         UserRole[]
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
   @@map("users")
 }
 
-model Goal {
-  id  Int    @id @default(autoincrement())
-  name String
-  userGoals UserGoal[] 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  @@map("goal")
+
+model Role {
+  id            Int          @id @default(autoincrement())
+  name          String
+  UserRoles     UserRole[]
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  @@map("role")
 }
 
-model Cusine {
-  id           Int          @id @default(autoincrement())
-  name         String
-  userCuisines UserCusine[] 
-  createdAt    DateTime     @default(now())
-  updatedAt    DateTime     @updatedAt
-  @@map("cuisines")
+model UserRole {
+  id            Int          @id @default(autoincrement())
+  userId        Int
+  roleId        Int
+  user          User         @relation(fields: [userId], references: [id])
+  role          Role         @relation(fields: [roleId], references: [id])
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  @@map("user_role")
 }
 
-model Diet {
-  id  Int    @id @default(autoincrement())
-  name String
-  userDiets UserDiet[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  @@map("diet")
+model Order {
+  id            Int          @id @default(autoincrement())
+  name          String?
+  userId        Int
+  serverId      Int?
+  isDelivered   Boolean   @default(false)
+  compensation  Int       @default(0)
+  reciepe       String?
+  user          User      @relation("UserAsCustomer", fields: [userId], references: [id])
+  server        User?     @relation("UserAsServer", fields: [serverId], references: [id])
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  @@map("order")
 }
 
-model UserCusine {
-  id         Int      @id @default(autoincrement())
-  userId     Int      
-  cusineId   Int      
-  user       User     @relation(fields: [userId], references: [id])
-  cusine     Cusine   @relation(fields: [cusineId], references: [id])
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  @@map("user_cuisines")
-}
-
-
-model UserDiet {
-  id         Int      @id @default(autoincrement())
-  userId     Int      
-  dietId     Int      
-  user       User     @relation(fields: [userId], references: [id])
-  diet       Diet   @relation(fields: [dietId], references: [id])
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  @@map("user_diets")
-}
-
-
-model UserGoal {
-  id         Int      @id @default(autoincrement())
-  userId     Int      
-  goalId     Int      
-  user       User     @relation(fields: [userId], references: [id])
-  goal       Goal   @relation(fields: [goalId], references: [id])
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  @@map("user_goals")
-}
