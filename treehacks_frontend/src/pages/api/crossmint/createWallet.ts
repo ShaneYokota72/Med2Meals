@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 
 export default async function handler( req: NextApiRequest, res: NextApiResponse ) {
-    if( req.method !== 'POST' ) {
+    if( req.method == 'POST' ) {
         const api_key = process.env.CROSSMINT_API_KEY || '';
         const options = {
             method: 'POST',

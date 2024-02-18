@@ -1,6 +1,33 @@
 "use client"
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
+import Image from 'next/image';
+
+export enum Cuisines {
+  American = 4,
+  Chinese = 5,
+  French = 6,
+  Indian = 7,
+  Italian = 8,
+  Japanese = 9,
+  Korean = 10,
+  Mexican = 11,
+  Thai = 12,
+  Vietnamese = 13,
+}
+
+export enum DietaryRestrictions {
+  Vegan = 5,
+  Vegetarian = 6,
+  GlutenFree = 7,
+  None = 8,
+}
+
+export enum Goals {
+  ProteinGoal = 1,
+  CalorieGoal = 2,
+}
+
 
 export enum Cuisines {
   American = 4,
@@ -56,6 +83,44 @@ interface signUpData {
 
 type Step = "credential" | "cuisine" | "restriction" | "goal" | "terra" | "complete"
 
+export default function page() {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+
+    const router = useRouter();
+
+    async function signup(){
+        console.log("username", username)
+        console.log("password", password)
+        // const response = await fetch('/api/signup', {
+        //     method: 'POST',
+        //     body: JSON.stringify({username, password})
+        // })
+        // const data = await response.json()
+        
+        // if(response.ok){
+        //     router.push(`/dashboard?userid=${data.id}`)
+        // } else {
+        //     alert("signup failed")
+        // }
+    }
+
+    return (
+        <div>
+            <div className="flex min-h-screen flex-col items-center justify-around bg-gradient-to-r from-[#FFC371] to-[#FF5F6D]">
+                {/* <h1 className="text-6xl font-bold text-white">Treehacks</h1> */}
+                <Image src="/Logo.png" alt='logo' width={200} height={200} className='w-10/12 h-auto'/>
+                <div className="flex flex-col gap-8 items-center">
+                    <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} className="bg-[#252937e0] px-8 py-4 text-white text-xl rounded-lg text-center" />
+                    <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} className="bg-[#252937e0] px-8 py-4 text-white text-xl rounded-lg text-center" />
+                    <button className="w-2/3 bg-[#252937] px-6 py-2 text-white text-xl rounded-lg text-center" onClick={signup}>Sign up</button>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+/* 
 export default function page() {
     const [step, setStep] = useState<Step>('credential');
     const [userid, setUserid] = useState<string>("" as string);
@@ -337,3 +402,4 @@ export default function page() {
         </div>
     )
 }
+ */
