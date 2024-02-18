@@ -38,6 +38,8 @@ export default function RecipeComponent({
   type
 }: RecipeComponentProps) {
   const [open, setOpen] = React.useState(false)
+  const instructions = reciepe.split("\n").slice(1)
+  let ingredientsList = ingredients.split("\n").slice(1)
 
   const ingredientsList = ingredients.split("\n");
   const reciepeList = reciepe.split("\n");
